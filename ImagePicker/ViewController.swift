@@ -13,15 +13,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
+    @IBOutlet weak var cameraButton: UIBarButtonItem!
+    @IBOutlet weak var albumButton: UIBarButtonItem!
+
     
     struct Meme {
-        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: memedImage)
+        var topText: String
+        var bottomText: String
+        var originalImage: UIImage
+        var memedImage: UIImage
         
     }
+    
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+       self.view.backgroundColor = UIColor.gray
+
         
         
         
@@ -37,6 +47,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         topTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.defaultTextAttributes = memeTextAttributes
+        
+        topTextField.textAlignment = NSTextAlignment.center
+        bottomTextField.textAlignment = NSTextAlignment.center
         
        
     }
@@ -54,9 +67,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
     }
     
-    @IBAction func takeImage() {
+    
+    @IBAction func takeAnImage(_ sender: AnyObject) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
+        imagePicker.sourceType = UIImagePickerControllerSourceType.camera
         self.present(imagePicker, animated: true, completion: nil)
     }
     
@@ -71,11 +86,32 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         dismiss(animated: true, completion: nil)
     }
     
+    // Creates the meme
+    
+    func save(memedImage: UIImage) {
+        
+        
+        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: memedImage)
+        
+    }
+    
+    // render view to an image
+    
+    func generateMemedImage() -> UIImage {
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
+        let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        return memedImage
+    }
+    
     // Moves view up/down when keyobard appears/dissapears 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         subscribeToKeyboardNotifications()
+        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         
     }
     
