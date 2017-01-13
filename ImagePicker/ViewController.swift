@@ -15,7 +15,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var albumButton: UIBarButtonItem!
-
+    @IBOutlet weak var topToolbar: UIToolbar!
+    @IBOutlet weak var bottomToolbar: UIToolbar!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    
     
     struct Meme {
         var topText: String
@@ -30,10 +33,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       // sets default background color
+    
        self.view.backgroundColor = UIColor.gray
 
         
-        
+        // defines text attributes
         
         let memeTextAttributes = [
         
@@ -48,14 +53,36 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         topTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.defaultTextAttributes = memeTextAttributes
         
+        // centers text
+        
         topTextField.textAlignment = NSTextAlignment.center
         bottomTextField.textAlignment = NSTextAlignment.center
         
        
     }
     
+    @IBAction func shareMeme(_ sender: AnyObject) {
+        let memedImage = generateMemedImage()
+        
+        let activityViewController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
+        
+        
+        activityViewController.completionWithItemsHandler = {activity, success, items, error in
+            if success {
+                self.save(memedImage: memedImage)
+            }
+        }
+       present(activityViewController, animated: true, completion: nil)
+        
+    }
+    
+    // returns app to default screen
+ 
+    @IBAction func returnToDefault(_ sender: AnyObject) {
+        UIApplication.shared.keyWindow?.rootViewController = storyboard!.instantiateViewController(withIdentifier: "ViewController")
+    }
 
-
+    // takes picture from album
 
     @IBAction func pickAnImage(_ sender: AnyObject) {
         
@@ -67,6 +94,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
     }
     
+    // takes pictures from camera 
     
     @IBAction func takeAnImage(_ sender: AnyObject) {
         let imagePicker = UIImagePickerController()
@@ -98,23 +126,42 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // render view to an image
     
     func generateMemedImage() -> UIImage {
+        topToolbar.isHidden = true
+        bottomToolbar.isHidden = true
+        
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
+        topToolbar.isHidden = false
+        bottomToolbar.isHidden = false
+        
         return memedImage
     }
     
-    // Moves view up/down when keyobard appears/dissapears 
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         subscribeToKeyboardNotifications()
+        
+        //disables camera button when there is no camera
+        
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        // Disables share button when there is no image
+
+        if imagePickerView.image == nil {
+            shareButton.isEnabled = false
+        } else {
+            shareButton.isEnabled = true
+        
+        }
         
     }
     
+    // Moves view up/down when keyobard appears/dissapears 
     
     func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
