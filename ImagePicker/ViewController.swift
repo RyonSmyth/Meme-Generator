@@ -48,7 +48,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         setTextFields(textField: topTextField)
         setTextFields(textField: bottomTextField)
         
-
+        
         
        
     }
