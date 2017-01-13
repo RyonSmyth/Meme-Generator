@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var topTextField: UITextField!
@@ -18,6 +18,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var topToolbar: UIToolbar!
     @IBOutlet weak var bottomToolbar: UIToolbar!
     @IBOutlet weak var shareButton: UIBarButtonItem!
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     
     
     struct Meme {
@@ -38,28 +42,34 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
        self.view.backgroundColor = UIColor.gray
 
         
-        // defines text attributes
+        // Sets text field attributes
         
+
+        setTextFields(textField: topTextField)
+        setTextFields(textField: bottomTextField)
+        
+
+        
+       
+    }
+    
+    // Defines text field attributes
+    func setTextFields(textField:UITextField) {
         let memeTextAttributes = [
-        
+            
             NSStrokeColorAttributeName : UIColor.black,
             NSForegroundColorAttributeName : UIColor.white,
             NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
             NSStrokeWidthAttributeName : -3.0
+            
+            ] as [String : Any]
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.textAlignment = NSTextAlignment.center
+        textField.delegate = self
         
-        ] as [String : Any]
-        
-        
-        topTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        
-        // centers text
-        
-        topTextField.textAlignment = NSTextAlignment.center
-        bottomTextField.textAlignment = NSTextAlignment.center
-        
-       
     }
+    
+    // Shares/saves meme
     
     @IBAction func shareMeme(_ sender: AnyObject) {
         let memedImage = generateMemedImage()
@@ -82,24 +92,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         UIApplication.shared.keyWindow?.rootViewController = storyboard!.instantiateViewController(withIdentifier: "ViewController")
     }
 
-    // takes picture from album
+    // Sets the source type to either photo library or camera and runs pickAnImage function
 
-    @IBAction func pickAnImage(_ sender: AnyObject) {
+    @IBAction func chooseSourceType(_ sender: UIBarButtonItem) {
         
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        self.present(imagePicker, animated: true, completion: nil)
+        if sender == albumButton {
+            pickAnImage(sourceType: .photoLibrary)
+        } else {
+            pickAnImage(sourceType: .camera)
+        }
         
         
     }
     
-    // takes pictures from camera 
+    // Will open either camera or album depending on source type
     
-    @IBAction func takeAnImage(_ sender: AnyObject) {
+    func pickAnImage(sourceType:UIImagePickerControllerSourceType) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+        imagePicker.sourceType = sourceType
         self.present(imagePicker, animated: true, completion: nil)
     }
     
@@ -191,12 +202,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func unsubscribeToKeyboardNotifications() {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     }
     
     func keyboardWillHide(notification: NSNotification) {
         
         self.view.frame.origin.y = 0
                
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     
