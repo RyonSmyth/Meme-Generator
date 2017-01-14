@@ -82,13 +82,13 @@
                             <constraint firstAttribute="trailing" secondItem="Dm0-nV-Me5" secondAttribute="trailing" id="JE1-Jc-upQ"/>
                             <constraint firstItem="Dm0-nV-Me5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="LzF-LM-mYy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5bR-GY-Sqh" secondAttribute="trailing" constant="22" id="MH0-f0-1TD"/>
-                            <constraint firstItem="SeI-8i-XBH" firstAttribute="top" secondItem="UqH-Hb-TgQ" secondAttribute="bottom" id="PSh-Af-Tgn"/>
                             <constraint firstAttribute="trailing" secondItem="UqH-Hb-TgQ" secondAttribute="trailing" id="VX3-2H-haF"/>
                             <constraint firstItem="fQa-YS-7cQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="21" id="ZAl-cp-wqY"/>
-                            <constraint firstItem="Dm0-nV-Me5" firstAttribute="top" secondItem="SeI-8i-XBH" secondAttribute="bottom" id="flg-7X-D3Y"/>
                             <constraint firstItem="UqH-Hb-TgQ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="iHT-w6-8q9"/>
+                            <constraint firstItem="SeI-8i-XBH" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="iLL-tQ-mBz"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Dm0-nV-Me5" secondAttribute="bottom" id="kA2-he-RL5"/>
                             <constraint firstItem="5bR-GY-Sqh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="21" id="p7r-8x-5Je"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="SeI-8i-XBH" secondAttribute="bottom" id="pFw-RH-LsB"/>
                         </constraints>
                     </view>
                     <connections>
