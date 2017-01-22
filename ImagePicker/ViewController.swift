@@ -23,15 +23,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return true
     }
     
-    
-    struct Meme {
-        var topText: String
-        var bottomText: String
-        var originalImage: UIImage
-        var memedImage: UIImage
-        
-    }
-    
 
     
     override func viewDidLoad() {
@@ -47,6 +38,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
         setTextFields(textField: topTextField)
         setTextFields(textField: bottomTextField)
+        
+        // Hides navigation bar/tab bar
+        
+        self.navigationController?.navigationBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = true
         
         
         
@@ -80,6 +76,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         activityViewController.completionWithItemsHandler = {activity, success, items, error in
             if success {
                 self.save(memedImage: memedImage)
+                
+                UIApplication.shared.keyWindow?.rootViewController = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
+                
             }
         }
        present(activityViewController, animated: true, completion: nil)
@@ -89,7 +88,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // returns app to default screen
  
     @IBAction func returnToDefault(_ sender: AnyObject) {
-        UIApplication.shared.keyWindow?.rootViewController = storyboard!.instantiateViewController(withIdentifier: "ViewController")
+        UIApplication.shared.keyWindow?.rootViewController = storyboard!.instantiateViewController(withIdentifier: "TabBarController")
     }
 
     // Sets the source type to either photo library or camera and runs pickAnImage function
@@ -131,6 +130,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: memedImage)
+        
+        let object = UIApplication.shared.delegate
+        let appDelegate = object as! AppDelegate
+        appDelegate.memes.append(meme)
         
     }
     
