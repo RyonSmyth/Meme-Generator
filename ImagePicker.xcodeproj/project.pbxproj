@@ -68,8 +68,8 @@
 			children = (
 				30D9D41E1DA352390022259E /* AppDelegate.swift */,
 				30D9D4201DA352390022259E /* ViewController.swift */,
-				30A664301E31F78B0045F74C /* SentMemesCollectionViewController.swift */,
 				30A664321E31F8D20045F74C /* SentMemesTableViewController.swift */,
+				30A664301E31F78B0045F74C /* SentMemesCollectionViewController.swift */,
 				30A6643E1E3457030045F74C /* MemeDetailViewController.swift */,
 				30A664341E340EE80045F74C /* Meme.swift */,
 				30A664381E3414CA0045F74C /* SentMemesTableViewCell.swift */,

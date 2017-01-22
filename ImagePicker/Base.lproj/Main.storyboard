@@ -277,14 +277,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sP0-cf-j4B"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sP0-cf-j4B"/>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="sP0-cf-j4B" firstAttribute="top" secondItem="rg6-N4-6gt" secondAttribute="bottom" constant="168" id="2Zc-rp-6cw"/>
-                            <constraint firstItem="oOe-Oq-0Cg" firstAttribute="top" secondItem="sP0-cf-j4B" secondAttribute="bottom" constant="229" id="844-vO-3JO"/>
-                            <constraint firstItem="sP0-cf-j4B" firstAttribute="leading" secondItem="Oi1-AN-UAy" secondAttribute="leadingMargin" constant="21" id="LYR-iR-407"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="sP0-cf-j4B" secondAttribute="trailing" constant="22" id="gvd-ku-IZZ"/>
+                            <constraint firstItem="sP0-cf-j4B" firstAttribute="top" secondItem="Oi1-AN-UAy" secondAttribute="top" id="Fiy-sv-TYP"/>
+                            <constraint firstAttribute="trailing" secondItem="sP0-cf-j4B" secondAttribute="trailing" id="dIy-tQ-Ug3"/>
+                            <constraint firstItem="oOe-Oq-0Cg" firstAttribute="top" secondItem="sP0-cf-j4B" secondAttribute="bottom" id="kgn-L1-5Ep"/>
+                            <constraint firstItem="sP0-cf-j4B" firstAttribute="leading" secondItem="Oi1-AN-UAy" secondAttribute="leading" id="y5L-uZ-LMo"/>
                         </constraints>
                     </view>
                     <connections>
